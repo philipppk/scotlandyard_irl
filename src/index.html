@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="styless.css">
+    <script src="webxdc.js"></script>
+    <script src="alpine.js"></script>
+    <script src="logic.js"></script>
+
+  </head>
+  <body x-data="state">
+
+    <div x-show="phase == 'config'" class="page">
+      <fieldset>
+        <label for="teams">Select the number of teams. <i>This includes mister x.</i></label>
+        <input id="teams" type="number" min="1" x-model="teams">
+      </fieldset>
+      <fieldset>
+        <p><label for="">Enter the stops you want to be part of the game. <i>Each line should contain one stop.</i></label></p>
+        <p><textarea id="stops" rows="20" cols="30">
+Frankfurt Hauptbahnhof
+Güterplatz
+Galluswarte
+Taunusanlage
+Hauptwache
+Platz der Republik
+Festhalle/Messe</textarea></p>
+      </fieldset>
+      <fieldset>
+        <label for="">Select at which time interval the position of mister x is revealed. <i>Time is given in minutes.</i></label>
+        <input id="mister_x_reveal_time" type="number" min="1" x-model="mister_x_reveal_time">
+      </fieldset>
+      <fieldset>
+        <label for="">Select after which time mister x wins. <i>Time is given in minutes.</i></label>
+        <input id="mister_x_reveal_time" type="number" min="1" x-model="mister_x_win_time">
+      </fieldset>
+      <fieldset>
+        <button x-on:click="sendConfig()">Confirm</button>
+      </fieldset>
+    </div>
+
+    <div x-show="phase == 'lobby'" class="page">
+      <fieldset>
+        <label for="team">Select which team you will join.</label>
+        <select id="team">
+          <template x-for="name in names(teams)">
+            <option x-bind:value="name" x-text="name"></option>
+          </template>
+        </select> 
+      </fieldset>
+      <fieldset>
+        <button x-on:click="
+          team = document.getElementById('team').value;
+          phase = 'game';
+          rewriteTime() 
+        ">Confirm</button>
+      </fieldset>
+    </div>
+
+    <div x-show="phase == 'game'" class="page">
+      <fieldset id="gameinfo">
+        <dl>
+          <dt>Time</dt>
+          <dd id="timer"></dd>
+          
+          <dt>You are</dt>
+          <dd x-text="team"></dd>
+
+          <dt>You are at</dt>
+          <dd x-text="current_position"></dd>
+        </dl>
+      </fieldset> 
+      <fieldset class="contains_table">
+      <p><label for="position">Log a new position</label></p>
+      <p><select id="position">
+        <template x-for="stop in stops">
+            <option x-bind:value="stop" x-text="stop"></option>
+        </template>
+      </select> </p>
+      <p><button x-on:click="
+        let position = document.getElementById('position').value;
+        sendPosition(position);
+        ">Confirm</button>
+      </p>
+        <div class="tablecontainer">
+        <table id="positions">
+          <template x-for="pos in pos_logs">
+            <tr><td x-text=
+              "printTime(pos.time_passed)"
+              ></td><td x-text=
+              "pos.team"
+              ></td><td x-text=
+              "printPosition(pos)"
+              ></td></tr>
+          </template>
+        </table>
+        </div>
+      </fieldset>
+
+      <fieldset x-show="team != 'Mr/Mrs X'" id="detective_chat">
+        <p><label for="chat_input">Type a message to other detectives.</label></p>
+        <p><textarea id="chat_input" rows="2" cols="30"></textarea></p>
+        <p><button x-on:click="
+          let message = document.getElementById('chat_input').value
+          sendMessage(message)
+        ">Send</button></p>
+
+        <dl id="messages">
+          <template x-for="m in message_logs">
+            <div>
+              <dt x-text="
+                m.origin + ' (' + printTime(m.time_passed) + ')'"
+                ></dt> 
+              <dd x-text="m.message"></dd>
+            </div>
+          </template>
+        </dl>
+      </fieldset>
+    </div>
+
+    <div x-show="phase == 'end'">
+      <fieldset>
+        <span x-text="game_result"></span>  
+      </fieldset>
+      <fieldset>
+      <label for="gamehistory">See the full game history:</label>
+        <div class="tablecontainer">
+        <table id="gamehistory">
+          <template x-for="pos in pos_logs">
+            <tr><td x-text=
+              "printTime(pos.time_passed)"
+            ></td><td x-text=
+              "pos.team"
+            ></td><td x-text=
+              "pos.position"
+            ></td></tr>
+          </template>
+        </table>
+        </div>
+      </fieldset>
+
+  </body>
+</html>

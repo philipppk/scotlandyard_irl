@@ -1,0 +1,80 @@
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.tablecontainer {
+  max-width: 85vw;
+  overflow-x: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+table td {
+  padding: 0.5rem;
+  border: none;
+  white-space: nowrap;
+}
+
+table td:first-child {
+  font-weight: 500;
+}
+
+#gameinfo {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 0.3em;
+  margin-bottom: 0.3em;
+  font-size: small;
+}
+
+#gameinfo dl {
+  
+  display: grid;
+  width: 100%;
+  grid-template-rows: repeat(2, auto);   /* exactly 2 rows */
+  grid-auto-flow: column;                /* fill column-by-column */
+  grid-auto-columns: minmax(max-content, 1fr);
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  
+  dd {
+    margin: 0;
+    max-width: 29vw;
+  }
+  dt {
+    font-style: italic;
+  }
+}
+
+#messages {
+  width: 85vw;
+  margin-left: auto;
+  margin-right: auto;
+  dd {
+    margin-left: 1em;
+    overflow-wrap: break-word;
+  }
+  dt {
+    font-style: italic;
+    overflow-wrap: break-word;
+  }
+}
+
+p {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
