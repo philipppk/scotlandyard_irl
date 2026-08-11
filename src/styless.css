@@ -39,9 +39,11 @@ table td:first-child {
 }
 
 #gameinfo dl {
-  
+  max-width: 85vw;
+  overflow-x: auto;
+  margin-left: auto;
+  margin-right: auto;
   display: grid;
-  width: 100%;
   grid-template-rows: repeat(2, auto);   /* exactly 2 rows */
   grid-auto-flow: column;                /* fill column-by-column */
   grid-auto-columns: minmax(max-content, 1fr);
@@ -53,7 +55,8 @@ table td:first-child {
   
   dd {
     margin: 0;
-    max-width: 29vw;
+    max-widtah: 29vw;
+    max-width: 35vw;
   }
   dt {
     font-style: italic;

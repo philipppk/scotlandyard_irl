@@ -94,12 +94,18 @@ function rewriteTime() {
     let timer = document.getElementById("timer");
     let seconds = Math.floor((gameTime() % 60000) / 1000);
     let time = printTime(gameTime()) 
-    if (seconds % 10 == 0) {
-        console.log("test")
+    if (seconds == 0) {
+        rewriteRevealTime()
         add_reveals(state.pos_logs)
         check_x_won()
     }
     timer.innerHTML = printTime(gameTime()) + " / " + state.mister_x_win_time + ":00";}
+
+function rewriteRevealTime() {
+    let rvtimer = document.getElementById("rvtimer")
+    let rvtime = (Math.floor(gameTime() / (state.mister_x_reveal_time*60000))+1) * state.mister_x_reveal_time;
+    rvtimer.innerHTML = rvtime + ":00"
+}
 
 function sendPosition(position) {
     state.current_position = position
@@ -176,6 +182,9 @@ function check_x_caught(pos_logs) {
             }
         }
     }
+    if (state.phase == "end" && state.game_result[9] == "w") {
+        state.phase = "game"
+    }
 }
 
 function check_x_won() {
@@ -184,7 +193,7 @@ function check_x_won() {
     console.log(minutes, state.mister_x_win_time) 
     if (minutes >= state.mister_x_win_time) {
         state.phase = "end"
-        state.game_result = "Mr/Mrs X successfully escaped the detectives for" + state.mister_x_win_time + " minutes."
+        state.game_result = "Mr/Mrs X successfully escaped the detectives for " + state.mister_x_win_time + " minutes."
     }
 }
 

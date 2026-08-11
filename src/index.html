@@ -18,13 +18,77 @@
       <fieldset>
         <p><label for="">Enter the stops you want to be part of the game. <i>Each line should contain one stop.</i></label></p>
         <p><textarea id="stops" rows="20" cols="30">
-Frankfurt Hauptbahnhof
-Güterplatz
-Galluswarte
-Taunusanlage
-Hauptwache
+Hauptbahnhof/
+Hbf/Münchener Str.
 Platz der Republik
-Festhalle/Messe</textarea></p>
+Hohenstaufenstr.
+Festhalle/Messe
+L.-Erhard-Anlage
+Varrentrappstr.
+Adalbert-/Schlossstr.
+Bockenheimer Warte
+Westend
+Alte Oper
+Baseler Platz
+Friedensbrücke
+Otto-Hahn-Platz
+Weser-/Münchener Str.
+Taunusanlage
+Eschenheimer Tor
+Grüneburgweg
+Hauptwache
+Willy-Brandt-Platz
+Schweizer-/Gartenstr.
+Schwanthalerstr.
+Schweizer Platz
+Südbahnhof
+Brücken-/Textorstr.
+Lokalbf/Textorstr.
+Lokalbahnhof
+Elisabethenstr.
+Karmeliterkloster
+Römer/Paulskirche
+Börneplatz
+Dom/Römer
+Börneplatz/Stoltzestr.
+Allerheiligentor
+Ostendstr.
+Zoo
+Hospital zum Hl. Geist
+Frankensteiner Platz
+Konstabler Wache
+Merianplatz
+Waldschmidtstr.
+Habsburger-/Wittelsbacher Allee
+Höhenstr.
+Nibelungenplatz
+Matthias-Beltz-Pl.
+Friedberger Platz
+Hessen-Denkmal
+Glauburgstr.
+Dt. Nationalbibliothek
+Musterschule
+Adlerflychtpl.
+Miquel-/Adickesallee
+Grüneburgpark
+Holzhausenstr.
+Juliusstr.
+Botanischer Garten
+Miquel-/Hansaallee
+Max-Horkheimer-Straße
+Holzhausen-Park
+Hynspergstraße
+Bornwiesenweg
+Peterskirche
+Alte Gasse
+Schöne Aussicht
+Affentorplatz
+Richard-Wagner-Straße
+Günthersburgallee
+Bertramstraße
+Scheffeleck
+Unterweg
+Bremer Straße</textarea></p>
       </fieldset>
       <fieldset>
         <label for="">Select at which time interval the position of mister x is revealed. <i>Time is given in minutes.</i></label>
@@ -63,6 +127,9 @@ Festhalle/Messe</textarea></p>
           <dt>Time</dt>
           <dd id="timer"></dd>
           
+          <dt>Next reveal at</dt>
+          <dd id="rvtimer"></dd>
+
           <dt>You are</dt>
           <dd x-text="team"></dd>
 
@@ -103,6 +170,7 @@ Festhalle/Messe</textarea></p>
         <p><button x-on:click="
           let message = document.getElementById('chat_input').value
           sendMessage(message)
+          document.getElementById('chat_input').value = ''
         ">Send</button></p>
 
         <dl id="messages">
